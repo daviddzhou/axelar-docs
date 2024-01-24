@@ -1,10 +1,16 @@
 # Upgrade existing tokens into Interchain Token(s)
 
+import { Callout } from "/src/components/callout";
+
 If you already have an ERC-20 token on one or more blockchains, you can turn it into an Interchain Token by deploying [Token Managers](../../reference/glossary/#token-manager). Token Managers can be either [Lock/Release](../../reference/glossary/#lockunlock) or [Mint/Burn](../../reference/glossary/#mintburn). Canonical tokens are registered under the local chain's Lock/Release token manager and mint/burn on remote chains. They can be deployed to remote chains by anyone and don't depend on a deployer address/salt.
 
 The Interchain Token Service is deployed to [`0xB5FB4BE02232B1bBA4dC8f81dc24C26980dE9e3C`](https://etherscan.io/address/0xB5FB4BE02232B1bBA4dC8f81dc24C26980dE9e3C) while the Interchain Token Factory is deployed to [`0x83a93500d23Fbc3e82B410aD07A6a9F7A0670D66`](https://etherscan.io/address/0x83a93500d23Fbc3e82B410aD07A6a9F7A0670D66).
 
 Now, let's explore how to transform existing tokens into Interchain Tokens.
+
+<Callout emoji="🚨">
+  **NOTE:** The security of your token is limited to the security of the chains it integrates with. When making a token interchain, make sure that all the chains it will be deployed to are trustworthy.
+</Callout>
 
 ## Canonical Tokens (Simple wrappers)
 
@@ -59,7 +65,7 @@ If pre-mint is needed, you must make ERC20 approval to the Interchain Token Fact
 For custom functionality on multiple chains:
 
 - Deploy your [custom](../../reference/glossary/#custom-token) token on multiple chains or have existing versions on multiple chains
-- Deploy a [Mint/Burn](../../reference/glossary/#mintburn) - [Token Manager](../../reference/glossary/#token-manager) for existing tokens on all chains using [`deployTokenManager`](https://github.com/axelarnetwork/interchain-token-service/blob/9edc4318ac1c17231e65886eea72c0f55469d7e5/contracts/InterchainTokenService.sol#L276) on Interchain Token Service. The `deployTokenManager` method requires parameters like `salt`, `destinationChain`, `tokenManagerType`, `params`, and `gasValue`
+- Deploy a [Mint/Burn](../../reference/glossary/#mintburn) - [Token Manager](../../reference/glossary/#token-manager) for existing tokens on all chains using [`deployTokenManager`](https://github.com/axelarnetwork/interchain-token-service/blob/9edc4318ac1c17231e65886eea72c0f55469d7e5/contracts/InterchainTokenService.sol#L276) on Interchain Token Service. The `deployTokenManager` method requires parameters like `salt`, `destinationChain`, [`tokenManagerType`](https://github.com/axelarnetwork/interchain-token-service/blob/main/contracts/interfaces/ITokenManagerType.sol), `params`, and `gasValue`
 - Transfer Interchain Tokens between chains via the Interchain Token Service by calling the [`interchainTransfer`](https://github.com/axelarnetwork/interchain-token-service/blob/9223108211b977d9138fdd67d5b4a641fc35c18c/contracts/interfaces/IInterchainTokenService.sol#L210)
 
 
